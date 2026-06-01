@@ -2,12 +2,17 @@ import React, { useEffect, useRef, useState } from 'react';
 import Preloader from './components/Preloader';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
+import Marquee from './components/Marquee';
 import Stats from './components/Stats';
 import Products from './components/Products';
+import Process from './components/Process';
 import Discover from './components/Discover';
 import Features from './components/Features';
+import Gallery from './components/Gallery';
 import Testimonials from './components/Testimonials';
+import FAQ from './components/FAQ';
 import Newsletter from './components/Newsletter';
+import CTA from './components/CTA';
 import Footer from './components/Footer';
 import { useScrollProgress } from './hooks/useScrollProgress';
 import './App.css';
@@ -42,7 +47,7 @@ function App() {
 
     window.addEventListener('mousemove', handleMouseMove);
 
-    // Smoother lerp for ring
+    // Smooth lerp for ring
     let animId;
     const tick = () => {
       ringRef.current.x += (mouseRef.current.x - ringRef.current.x) * 0.12;
@@ -76,7 +81,7 @@ function App() {
     <>
       <Preloader />
 
-      {/* Scroll progress — thinner, dark */}
+      {/* Scroll progress */}
       <div
         className="fixed top-0 left-0 h-[1.5px] bg-brown z-[99999] origin-left w-full pointer-events-none"
         style={{ transform: `scaleX(${scrollProgress / 100})` }}
@@ -101,12 +106,17 @@ function App() {
 
         <main className="flex-grow">
           <Hero />
+          <Marquee />
           <Stats />
           <Products />
+          <Process />
           <Discover />
           <Features />
+          <Gallery />
           <Testimonials />
+          <FAQ />
           <Newsletter />
+          <CTA />
         </main>
 
         <Footer />

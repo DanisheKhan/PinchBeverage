@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { slideInLeft, slideInRight } from '../utils/animations';
+import { slideInLeft, fadeUp } from '../utils/animations';
 
 export default function Newsletter() {
   const [email, setEmail] = useState('');
@@ -16,95 +16,60 @@ export default function Newsletter() {
   };
 
   return (
-    <section
-      id="newsletter"
-      className="bg-brown py-24 relative overflow-hidden select-text text-cream"
-    >
-      {/* Background soft glowing highlights */}
-      <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
-        <div className="absolute left-[10%] bottom-0 w-[400px] h-[400px] bg-gold/15 rounded-full blur-3xl"></div>
+    <section id="newsletter" className="bg-brown py-28 relative overflow-hidden">
+      {/* Soft ambient glow */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <div className="absolute left-[5%] bottom-[-20%] w-[500px] h-[500px] bg-gold/5 rounded-full blur-3xl"></div>
+        <div className="absolute right-[10%] top-[-10%] w-[300px] h-[300px] bg-gold/3 rounded-full blur-3xl"></div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          
-          {/* Left Text and Form Block */}
+      <div className="max-w-6xl mx-auto px-6 relative z-10">
+        <div className="max-w-xl mx-auto text-center">
+
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: '-80px' }}
-            variants={slideInLeft}
-            className="flex flex-col space-y-6 select-text"
+            viewport={{ once: true, margin: '-60px' }}
+            variants={fadeUp}
+            className="flex flex-col items-center space-y-6"
           >
-            <span className="font-body text-xs font-bold text-gold uppercase tracking-[0.25em]">
+            <span className="font-body text-[11px] uppercase tracking-[0.25em] font-medium text-gold/70">
               Stay Refreshed
             </span>
-            
-            <h2 className="font-heading font-bold text-3xl sm:text-4xl lg:text-[44px] leading-[1.1] text-cream select-text">
-              Join in and get 25% OFF!
+
+            <h2 className="font-heading font-bold text-3xl sm:text-4xl lg:text-[40px] leading-[1.12] text-cream">
+              Get 25% off your first order
             </h2>
 
-            <p className="font-body text-sm md:text-base text-muted/80 leading-relaxed select-text">
-              Subscribe to the Pinch newsletter to receive updates on new flavours, seasonal Indian carbonated releases, and exclusive member discount campaigns direct to your inbox.
+            <p className="font-body text-[14px] text-cream/40 leading-relaxed max-w-md">
+              Subscribe to receive updates on new flavours, seasonal releases, and exclusive member discounts.
             </p>
 
-            {/* Email form pill shape */}
-            <form onSubmit={handleSubscribe} className="pt-4 flex flex-col sm:flex-row items-center gap-3 w-full max-w-md">
+            {/* Email form */}
+            <form
+              onSubmit={handleSubscribe}
+              className="pt-4 flex flex-col sm:flex-row items-center gap-3 w-full max-w-md"
+            >
               <input
                 type="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email address"
-                className="w-full px-6 py-4 bg-dark/70 border border-border/20 text-cream placeholder-muted rounded-full focus:outline-none focus:border-gold/80 transition-all font-body text-sm"
+                placeholder="Enter your email"
+                className="w-full px-5 py-3.5 bg-cream/5 border border-cream/10 text-cream placeholder-cream/25 rounded-full focus:outline-none focus:border-cream/30 transition-all duration-300 font-body text-[13px]"
               />
               <button
                 type="submit"
-                className="w-full sm:w-auto px-8 py-4 bg-gold hover:bg-cream text-brown hover:text-brown font-body text-xs font-bold uppercase tracking-wider rounded-full shadow-lg transition-colors duration-300 select-none whitespace-nowrap active:scale-97"
+                className="w-full sm:w-auto px-7 py-3.5 bg-cream text-brown font-body text-[11px] font-semibold uppercase tracking-wider rounded-full transition-all duration-300 hover:bg-gold hover:text-cream select-none whitespace-nowrap"
               >
                 {subscribed ? '✓ Subscribed' : 'Subscribe'}
               </button>
             </form>
+
+            <p className="font-body text-[10px] text-cream/20 pt-2">
+              No spam, ever. Unsubscribe anytime.
+            </p>
           </motion.div>
-
-          {/* Right Silhouette Decorative Block */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-80px' }}
-            variants={slideInRight}
-            className="relative flex justify-center items-center h-[350px] lg:h-[400px] select-none"
-          >
-            {/* Ambient gold glow */}
-            <div className="absolute w-[260px] h-[260px] bg-gold/10 rounded-full blur-2xl z-0 animate-ring-pulse"></div>
-
-            {/* Concentric rings */}
-            <div className="absolute w-[200px] h-[200px] border border-gold/15 rounded-full animate-ring-pulse"></div>
-            <div className="absolute w-[300px] h-[300px] border border-gold/5 rounded-full animate-ring-pulse" style={{ animationDelay: '2s' }}></div>
-
-            {/* Elegant SVG outline silhouette representing our beverage bottle */}
-            <svg
-              width="150"
-              height="350"
-              viewBox="0 0 100 230"
-              fill="none"
-              stroke="#C9952A"
-              strokeWidth="1.5"
-              strokeOpacity="0.4"
-              className="relative z-10 w-[120px] sm:w-[150px] h-auto opacity-70 animate-float"
-            >
-              {/* Bottle silhouette using similar proportions */}
-              <path d="M 50 10 C 60 10, 62 15, 62 30 C 62 45, 75 75, 80 120 C 85 170, 80 220, 50 220 C 20 220, 15 170, 20 120 C 25 75, 38 45, 38 30 C 38 15, 40 10, 50 10 Z" />
-              {/* Internal abstract liquid ripple details */}
-              <path d="M 23 150 Q 50 160 77 150" strokeOpacity="0.2" />
-              <path d="M 25 180 Q 50 190 75 180" strokeOpacity="0.1" />
-              {/* Label area outline */}
-              <rect x="23" y="100" width="54" height="40" rx="3" strokeWidth="1" strokeOpacity="0.3" />
-              {/* Cap outline details */}
-              <rect x="42" y="3" width="16" height="7" rx="1.5" strokeOpacity="0.5" />
-            </svg>
-          </motion.div>
-
         </div>
       </div>
     </section>

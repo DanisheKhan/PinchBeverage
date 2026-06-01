@@ -14,8 +14,8 @@ import './App.css';
 
 function App() {
   const scrollProgress = useScrollProgress();
-  
-  // Custom Cursor References
+
+  // Custom Cursor
   const cursorDotRef = useRef(null);
   const cursorRingRef = useRef(null);
   const mouseRef = useRef({ x: -100, y: -100 });
@@ -24,7 +24,6 @@ function App() {
   const [isMobile, setIsMobile] = useState(true);
 
   useEffect(() => {
-    // Detect mobile to disable custom cursor on touch devices
     const checkDevice = () => {
       setIsMobile(window.innerWidth < 1024);
     };
@@ -34,7 +33,7 @@ function App() {
     const handleMouseMove = (e) => {
       mouseRef.current.x = e.clientX;
       mouseRef.current.y = e.clientY;
-      
+
       if (cursorDotRef.current) {
         cursorDotRef.current.style.left = `${e.clientX}px`;
         cursorDotRef.current.style.top = `${e.clientY}px`;
@@ -43,22 +42,21 @@ function App() {
 
     window.addEventListener('mousemove', handleMouseMove);
 
-    // Dynamic Lerp Animation Frame Loop for Outer Ring Lag
+    // Smoother lerp for ring
     let animId;
     const tick = () => {
-      ringRef.current.x += (mouseRef.current.x - ringRef.current.x) * 0.15;
-      ringRef.current.y += (mouseRef.current.y - ringRef.current.y) * 0.15;
-      
+      ringRef.current.x += (mouseRef.current.x - ringRef.current.x) * 0.12;
+      ringRef.current.y += (mouseRef.current.y - ringRef.current.y) * 0.12;
+
       if (cursorRingRef.current) {
         cursorRingRef.current.style.left = `${ringRef.current.x}px`;
         cursorRingRef.current.style.top = `${ringRef.current.y}px`;
       }
-      
+
       animId = requestAnimationFrame(tick);
     };
     animId = requestAnimationFrame(tick);
 
-    // Global Hover Detection for interactive elements
     const handleMouseOver = (e) => {
       const target = e.target;
       const isInteractive = target.closest('a, button, select, input, [role="button"]');
@@ -76,16 +74,15 @@ function App() {
 
   return (
     <>
-      {/* 1. Preloader drawing entrance */}
       <Preloader />
 
-      {/* 2. Top Scroll Progress Indicator */}
+      {/* Scroll progress — thinner, dark */}
       <div
-        className="progress fixed top-0 left-0 h-[2.5px] bg-gold z-[99999] origin-left w-full pointer-events-none"
+        className="fixed top-0 left-0 h-[1.5px] bg-brown z-[99999] origin-left w-full pointer-events-none"
         style={{ transform: `scaleX(${scrollProgress / 100})` }}
       ></div>
 
-      {/* 3. Custom double-ring cursor (Desktop Only) */}
+      {/* Custom cursor (Desktop only) */}
       {!isMobile && (
         <>
           <div
@@ -99,12 +96,9 @@ function App() {
         </>
       )}
 
-      {/* 4. Main App Layout Grid */}
       <div className="relative min-h-screen flex flex-col">
-        {/* Fixed Header */}
         <Navbar />
 
-        {/* Content stream */}
         <main className="flex-grow">
           <Hero />
           <Stats />
@@ -115,7 +109,6 @@ function App() {
           <Newsletter />
         </main>
 
-        {/* Footer info blocks */}
         <Footer />
       </div>
     </>

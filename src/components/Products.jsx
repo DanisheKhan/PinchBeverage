@@ -14,8 +14,7 @@ const productsData = [
     size: '500ml',
     image: '/jeera-masala.jpg',
     video: '/jeera-masala.mp4',
-    bgAccent: '#EAEFE5', // Muted herbal cream
-    goldGlow: 'rgba(201, 149, 42, 0.15)',
+    bgAccent: '#F2F0EB',
     description: 'Deep roasted cumin spices infused with sparkling carbonation.',
   },
   {
@@ -26,8 +25,7 @@ const productsData = [
     size: '500ml',
     image: '/orange.jpg',
     video: '/orange.mp4',
-    bgAccent: '#FDF1E2', // Warm saffron orange tint
-    goldGlow: 'rgba(232, 120, 10, 0.12)',
+    bgAccent: '#F5F0E8',
     description: 'Sizzling, citrusy Nagpur orange extract with a bubbly kick.',
   },
   {
@@ -38,8 +36,7 @@ const productsData = [
     size: '500ml',
     image: '/mojito.jpg',
     video: '/mojito.mp4',
-    bgAccent: '#E8F5F1', // Minty clean aqua tint
-    goldGlow: 'rgba(201, 149, 42, 0.15)',
+    bgAccent: '#EDF2F0',
     description: 'Fresh muddled lime and wild mint, perfectly carbonated.',
   },
   {
@@ -50,8 +47,7 @@ const productsData = [
     size: '500ml',
     image: '/mango.jpg',
     video: '/mango.mp4',
-    bgAccent: '#FCF5E0', // Mango cream gold tint
-    goldGlow: 'rgba(201, 149, 42, 0.2)',
+    bgAccent: '#F5F2E8',
     description: 'Rich, aromatic Konkan mango pulp with fizzy indulgence.',
   },
 ];
@@ -62,35 +58,25 @@ export default function Products() {
   const [cartStates, setCartStates] = useState({});
 
   useEffect(() => {
-    // Elegant letter-by-letter scroll text reveal
     const ctx = gsap.context(() => {
       const heading = headingRef.current;
       if (!heading) return;
 
-      const text = heading.innerText;
-      heading.innerHTML = '';
-      
-      // Wrap characters in span tags
-      text.split('').forEach((char) => {
-        const span = document.createElement('span');
-        span.innerText = char === ' ' ? '\u00A0' : char;
-        span.className = 'inline-block opacity-0 translate-y-8 transition-transform';
-        heading.appendChild(span);
-      });
-
-      // Animate character spans on scroll
-      gsap.to(heading.children, {
-        opacity: 1,
-        y: 0,
-        stagger: 0.05,
-        duration: 0.8,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: heading,
-          start: 'top 85%',
-          toggleActions: 'play none none none',
-        },
-      });
+      gsap.fromTo(
+        heading,
+        { opacity: 0, y: 24 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: heading,
+            start: 'top 88%',
+            toggleActions: 'play none none none',
+          },
+        }
+      );
     }, containerRef);
 
     return () => ctx.revert();
@@ -106,26 +92,29 @@ export default function Products() {
   return (
     <section
       ref={containerRef}
-      id="flavours"
-      className="bg-cream py-24 border-b border-border select-text"
+      id="products"
+      className="bg-cream py-24"
     >
-      <div className="max-w-7xl mx-auto px-6">
-        
+      <div className="max-w-6xl mx-auto px-6">
+
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-16">
+        <div className="text-center max-w-lg mx-auto mb-20">
+          <span className="font-body text-[11px] uppercase tracking-[0.25em] font-medium text-muted">
+            Collection
+          </span>
           <h2
             ref={headingRef}
-            className="font-heading font-bold text-3xl sm:text-4xl lg:text-[46px] text-brown select-text"
+            className="mt-3 font-heading font-bold text-3xl sm:text-4xl lg:text-[42px] text-brown"
           >
             Explore Our Flavours
           </h2>
-          <p className="mt-4 font-body text-sm text-muted leading-relaxed select-text">
-            Discover a unique collection of carbonated beverages balancing traditional Indian essences with premium carbonation.
+          <p className="mt-4 font-body text-[13px] text-muted leading-relaxed">
+            A unique collection of carbonated beverages balancing traditional Indian essences with premium carbonation.
           </p>
         </div>
 
-        {/* 4-Column Product Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        {/* Product Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {productsData.map((product, idx) => {
             const videoRef = useRef(null);
 
@@ -145,31 +134,26 @@ export default function Products() {
             return (
               <motion.div
                 key={product.id}
-                initial={{ opacity: 0, y: 50 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-80px' }}
-                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: idx * 0.12 }}
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: idx * 0.08 }}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
-                className="group relative glass-card rounded-3xl p-4 flex flex-col justify-between overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_var(--color-accent)] hover:border-gold/30 bg-white select-none"
-                style={{ '--color-accent': product.goldGlow }}
+                className="group relative bg-white rounded-2xl p-3 flex flex-col border border-border/60 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_12px_30px_rgba(26,18,7,0.06)] hover:border-border select-none"
               >
-                
-                {/* Image & Video Container */}
+
+                {/* Image Container */}
                 <div
-                  className="relative h-64 rounded-2xl overflow-hidden flex items-center justify-center mb-6 transition-transform duration-500 group-hover:scale-[1.02]"
+                  className="relative h-56 rounded-xl overflow-hidden flex items-center justify-center mb-5 transition-transform duration-500 group-hover:scale-[1.01]"
                   style={{ backgroundColor: product.bgAccent }}
                 >
-                  
-                  {/* Static Cover Image */}
                   <img
                     src={product.image}
                     alt={product.name}
-                    className="absolute inset-0 w-full h-full object-cover mix-blend-multiply opacity-90 transition-opacity duration-500 group-hover:opacity-0"
+                    className="absolute inset-0 w-full h-full object-cover opacity-90 transition-opacity duration-500 group-hover:opacity-0"
                     loading="lazy"
                   />
-
-                  {/* Looping Ambient Fizz Video */}
                   <video
                     ref={videoRef}
                     src={product.video}
@@ -179,72 +163,58 @@ export default function Products() {
                     className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
                   />
 
-                  {/* Brand Tag Overlay */}
-                  <div className="absolute top-3 left-3 bg-cream/90 backdrop-blur border border-border px-3 py-1 rounded-full">
-                    <span className="font-heading italic text-[10px] text-gold font-bold uppercase tracking-wider">
+                  {/* Tag */}
+                  <div className="absolute top-2.5 left-2.5 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full">
+                    <span className="font-body text-[9px] text-muted font-medium uppercase tracking-wider">
                       {product.tagline}
                     </span>
                   </div>
-
-                  {/* Heart Like Button */}
-                  <button className="absolute top-3 right-3 w-8 h-8 rounded-full bg-cream/90 backdrop-blur border border-border flex items-center justify-center text-muted hover:text-red-500 transition-colors duration-300">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
-                    </svg>
-                  </button>
                 </div>
 
-                {/* Card Bottom Details */}
-                <div className="px-1 flex flex-col flex-grow select-text">
-                  <div className="flex justify-between items-baseline mb-2 select-text">
-                    <h3 className="font-heading font-bold text-lg text-brown group-hover:text-gold transition-colors select-text">
+                {/* Details */}
+                <div className="px-1 flex flex-col flex-grow">
+                  <div className="flex justify-between items-baseline mb-1.5">
+                    <h3 className="font-heading font-bold text-base text-brown group-hover:text-gold transition-colors duration-300">
                       {product.name}
                     </h3>
-                    <span className="font-body text-xs font-bold text-muted uppercase tracking-wider select-text">
+                    <span className="font-body text-[10px] font-medium text-muted uppercase tracking-wider">
                       {product.size}
                     </span>
                   </div>
-                  
-                  <p className="font-body text-xs text-muted leading-relaxed mb-6 flex-grow select-text">
+
+                  <p className="font-body text-[11px] text-muted leading-relaxed mb-5 flex-grow">
                     {product.description}
                   </p>
 
                   <div className="flex items-center justify-between mt-auto">
-                    {/* Price */}
-                    <span className="font-heading font-bold text-xl text-brown select-text">
+                    <span className="font-heading font-bold text-lg text-brown">
                       {product.price}
                     </span>
-
-                    {/* Add to Cart Button */}
                     <button
                       onClick={() => handleAddToCart(product.id)}
-                      className={`inline-flex items-center space-x-2 px-5 py-2.5 rounded-full font-body text-xs font-bold uppercase tracking-wider transition-all duration-300 select-none ${
+                      className={`inline-flex items-center space-x-1.5 px-4 py-2 rounded-full font-body text-[10px] font-semibold uppercase tracking-wider transition-all duration-300 select-none ${
                         cartStates[product.id]
-                          ? 'bg-emerald-600 text-cream scale-95 shadow-[0_4px_15px_rgba(5,150,105,0.2)]'
-                          : 'bg-gold hover:bg-brown text-cream shadow-[0_4px_15px_rgba(201,149,42,0.15)]'
+                          ? 'bg-emerald-600 text-cream'
+                          : 'bg-brown text-cream hover:bg-gold'
                       }`}
                     >
                       {cartStates[product.id] ? (
-                        <>
-                          <span>✓ Added!</span>
-                        </>
+                        <span>✓ Added</span>
                       ) : (
                         <>
-                          <span>Add to cart</span>
-                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                            <path d="M5 12h14M12 5l7 7-7 7" />
+                          <span>Add to Cart</span>
+                          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                            <path d="M12 5v14M5 12h14" />
                           </svg>
                         </>
                       )}
                     </button>
                   </div>
                 </div>
-
               </motion.div>
             );
           })}
         </div>
-
       </div>
     </section>
   );

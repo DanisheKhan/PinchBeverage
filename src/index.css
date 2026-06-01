@@ -1,16 +1,16 @@
 @import "tailwindcss";
 
 @theme {
-  --color-cream: #FFFDF8;
-  --color-soft: #FFF6E9;
-  --color-accent: #FFF0D4;
-  --color-gold: #C9952A;
-  --color-saffron: #E8780A;
-  --color-brown: #1A0A00;
-  --color-text: #3D2000;
-  --color-muted: #8B6A40;
-  --color-border: #F0E4CC;
-  --color-dark: #0D0700;
+  --color-cream: #FAFAF7;
+  --color-soft: #F5F3EE;
+  --color-accent: #EDE8DC;
+  --color-gold: #B8860B;
+  --color-saffron: #D4890A;
+  --color-brown: #1A1207;
+  --color-text: #2D1F0E;
+  --color-muted: #8C7A5E;
+  --color-border: #E8E2D6;
+  --color-dark: #0F0B05;
 
   --font-heading: "Playfair Display", serif;
   --font-body: "DM Sans", sans-serif;
@@ -22,152 +22,87 @@
     background-color: var(--color-cream);
     color: var(--color-text);
     font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   body {
     overflow-x: hidden;
   }
 
-  /* Custom Premium Scrollbar */
+  /* Minimal scrollbar */
   ::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
   }
   ::-webkit-scrollbar-track {
-    background: var(--color-cream);
+    background: transparent;
   }
   ::-webkit-scrollbar-thumb {
     background: var(--color-border);
     border-radius: 99px;
-    border: 2px solid var(--color-cream);
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: var(--color-gold);
+    background: var(--color-muted);
   }
 }
 
-/* Custom Floating Animations */
+/* ─── Smooth Float ─── */
 @keyframes float {
-  0% {
-    transform: translateY(0px) rotate(0deg);
-  }
-  50% {
-    transform: translateY(-16px) rotate(1deg);
-  }
-  100% {
-    transform: translateY(0px) rotate(0deg);
-  }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
 }
 
 .animate-float {
-  animation: float 6s ease-in-out infinite;
-}
-
-@keyframes float-delayed {
-  0% {
-    transform: translateY(0px) rotate(0deg);
-  }
-  50% {
-    transform: translateY(-12px) rotate(-1.5deg);
-  }
-  100% {
-    transform: translateY(0px) rotate(0deg);
-  }
+  animation: float 6s cubic-bezier(0.37, 0, 0.63, 1) infinite;
 }
 
 .animate-float-delayed {
-  animation: float-delayed 7s ease-in-out infinite;
-  animation-delay: 2s;
+  animation: float 7s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+  animation-delay: 1.5s;
 }
 
-@keyframes float-fast {
-  0% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-8px);
-  }
-  100% {
-    transform: translateY(0px);
-  }
+/* ─── Gentle Breathe (replaces glow-pulse) ─── */
+@keyframes breathe {
+  0%, 100% { opacity: 0.4; transform: scale(0.98); }
+  50% { opacity: 0.6; transform: scale(1.02); }
 }
 
-.animate-float-fast {
-  animation: float-fast 4s ease-in-out infinite;
+.animate-breathe {
+  animation: breathe 5s cubic-bezier(0.37, 0, 0.63, 1) infinite;
 }
 
-/* Glow Pulse Shadow */
-@keyframes glowPulse {
-  0% {
-    filter: drop-shadow(0 20px 30px rgba(201, 149, 42, 0.2));
-  }
-  50% {
-    filter: drop-shadow(0 20px 45px rgba(201, 149, 42, 0.45));
-  }
-  100% {
-    filter: drop-shadow(0 20px 30px rgba(201, 149, 42, 0.2));
-  }
-}
-
-.animate-glow-pulse {
-  animation: glowPulse 3s ease-in-out infinite;
-}
-
-/* Glassmorphism Classes */
+/* ─── Glass Effects ─── */
 .glass-nav {
-  background-color: rgba(255, 253, 248, 0.75);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background-color: rgba(250, 250, 247, 0.8);
+  backdrop-filter: blur(20px) saturate(1.2);
+  -webkit-backdrop-filter: blur(20px) saturate(1.2);
 }
 
 .glass-card {
-  background-color: rgba(255, 255, 255, 0.65);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background-color: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border: 1px solid var(--color-border);
 }
 
-/* Radial Glowing Background */
+/* ─── Radial Glow (softer) ─── */
 .radial-glow {
-  background: radial-gradient(circle, rgba(255, 240, 212, 0.6) 0%, rgba(255, 253, 248, 0) 70%);
+  background: radial-gradient(circle, rgba(237, 232, 220, 0.5) 0%, transparent 70%);
 }
 
-/* SVG Logo Drawing Keyframes */
+/* ─── SVG Logo Draw ─── */
 @keyframes drawPath {
-  0% {
-    stroke-dashoffset: 1000;
-  }
-  100% {
-    stroke-dashoffset: 0;
-  }
+  0% { stroke-dashoffset: 1000; }
+  100% { stroke-dashoffset: 0; }
 }
 
 .animate-draw {
   stroke-dasharray: 1000;
   stroke-dashoffset: 1000;
-  animation: drawPath 3s ease-out forwards;
+  animation: drawPath 2.5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
 }
 
-/* Concentric Rings Pulse */
-@keyframes ringPulse {
-  0% {
-    transform: scale(0.95);
-    opacity: 0.2;
-  }
-  50% {
-    transform: scale(1.05);
-    opacity: 0.5;
-  }
-  100% {
-    transform: scale(0.95);
-    opacity: 0.2;
-  }
-}
-
-.animate-ring-pulse {
-  animation: ringPulse 4s ease-in-out infinite;
-}
-
-/* Desktop-only Custom Cursor Styling */
+/* ─── Desktop Custom Cursor ─── */
 @media (min-width: 1024px) {
   body {
     cursor: none;
@@ -181,30 +116,46 @@
   pointer-events: none;
   position: fixed;
   z-index: 9999;
-  width: 8px;
-  height: 8px;
-  background-color: var(--color-gold);
+  width: 6px;
+  height: 6px;
+  background-color: var(--color-brown);
   border-radius: 50%;
   transform: translate(-50%, -50%);
-  transition: width 0.2s, height 0.2s, background-color 0.2s;
+  transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+              height 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+              background-color 0.3s;
 }
 
 .custom-cursor-ring {
   pointer-events: none;
   position: fixed;
   z-index: 9998;
-  width: 32px;
-  height: 32px;
-  border: 1px solid var(--color-gold);
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(26, 18, 7, 0.25);
   border-radius: 50%;
   transform: translate(-50%, -50%);
-  transition: width 0.2s, height 0.2s, background-color 0.2s, border-color 0.2s;
+  transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+              height 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+              background-color 0.4s,
+              border-color 0.4s;
 }
 
-/* Active State of Ring on Hover */
 .custom-cursor-ring.hovered {
-  width: 48px;
-  height: 48px;
-  background-color: rgba(201, 149, 42, 0.15);
+  width: 52px;
+  height: 52px;
+  background-color: rgba(184, 134, 11, 0.08);
   border-color: var(--color-gold);
+}
+
+/* ─── Smooth Section Dividers ─── */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--color-border) 20%,
+    var(--color-border) 80%,
+    transparent 100%
+  );
 }

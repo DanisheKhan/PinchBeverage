@@ -6,32 +6,32 @@ const galleryImages = [
   {
     id: 1,
     src: '/jeera-masala.jpg',
-    alt: 'Jeera Masala craft preparation',
-    label: 'Jeera Masala',
+    alt: 'Stamina Litchi premium fruit drink',
+    label: 'Stamina Litchi',
     span: 'col-span-1 row-span-2',
-    aspect: 'aspect-[3/4]',
+    aspect: 'h-full',
   },
   {
     id: 2,
     src: '/orange.jpg',
-    alt: 'Orange Sip citrus burst',
-    label: 'Orange Sip',
+    alt: 'Pink Guava premium fruit drink',
+    label: 'Pink Guava',
     span: 'col-span-1 row-span-1',
     aspect: 'aspect-square',
   },
   {
     id: 3,
     src: '/mojito.jpg',
-    alt: 'Minty Mojito freshness',
-    label: 'Minty Mojito',
+    alt: 'Pomegranate premium fruit drink',
+    label: 'Pomegranate',
     span: 'col-span-1 row-span-1',
     aspect: 'aspect-square',
   },
   {
     id: 4,
     src: '/mango.jpg',
-    alt: 'Alphonso Mango richness',
-    label: 'Alphonso Mango',
+    alt: 'Refreshingly Low-Calorie Jeera Masala',
+    label: 'Jeera Masala',
     span: 'col-span-2 row-span-1',
     aspect: 'aspect-[16/7]',
   },
@@ -73,17 +73,17 @@ export default function Gallery() {
               key={img.id}
               variants={fadeUp}
               onClick={() => setActiveImage(img)}
-              className={`${img.span} group relative overflow-hidden rounded-xl cursor-pointer select-none`}
+              className={`${img.span} ${img.aspect} group relative overflow-hidden rounded-xl cursor-pointer select-none flex flex-col`}
             >
-              <div className={`${img.aspect} w-full`}>
+              <div className="relative w-full h-full flex-grow">
                 <img
                   src={img.src}
                   alt={img.alt}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   loading="lazy"
                 />
                 {/* Overlay */}
-                <div className="absolute inset-0 bg-brown/0 group-hover:bg-brown/20 transition-colors duration-500 flex items-end p-5">
+                <div className="absolute inset-0 bg-brown/0 group-hover:bg-brown/20 transition-colors duration-500 flex items-end p-5 z-10">
                   <span className="font-body text-[11px] font-semibold text-cream uppercase tracking-wider opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-500">
                     {img.label}
                   </span>

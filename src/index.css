@@ -32,7 +32,7 @@
 
   /* Minimal scrollbar */
   ::-webkit-scrollbar {
-    width: 6px;
+    width: 4px;
   }
   ::-webkit-scrollbar-track {
     background: transparent;
@@ -46,36 +46,141 @@
   }
 }
 
-/* ─── Smooth Float ─── */
+/* ─── Float ─── */
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-8px) rotate(0.5deg); }
+  66% { transform: translateY(-14px) rotate(-0.5deg); }
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-18px); }
 }
 
 .animate-float {
-  animation: float 6s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+  animation: float 7s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+}
+
+.animate-float-slow {
+  animation: float-slow 9s cubic-bezier(0.37, 0, 0.63, 1) infinite;
 }
 
 .animate-float-delayed {
-  animation: float 7s cubic-bezier(0.37, 0, 0.63, 1) infinite;
-  animation-delay: 1.5s;
+  animation: float 8s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+  animation-delay: 2s;
 }
 
-/* ─── Gentle Breathe (replaces glow-pulse) ─── */
+/* ─── Breathe ─── */
 @keyframes breathe {
-  0%, 100% { opacity: 0.4; transform: scale(0.98); }
-  50% { opacity: 0.6; transform: scale(1.02); }
+  0%, 100% { opacity: 0.3; transform: scale(0.95); }
+  50% { opacity: 0.55; transform: scale(1.05); }
 }
 
 .animate-breathe {
-  animation: breathe 5s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+  animation: breathe 6s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+}
+
+/* ─── Orbital Rotation ─── */
+@keyframes orbit {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes orbit-reverse {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+
+.animate-orbit {
+  animation: orbit 30s linear infinite;
+}
+
+.animate-orbit-reverse {
+  animation: orbit-reverse 22s linear infinite;
+}
+
+/* ─── Curtain Wipe (Preloader exit) ─── */
+@keyframes curtain-up {
+  0% { transform: translateY(0%); }
+  100% { transform: translateY(-100%); }
+}
+
+.animate-curtain-up {
+  animation: curtain-up 0.9s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+
+/* ─── Shimmer sweep ─── */
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--color-brown) 0%,
+    var(--color-gold) 40%,
+    var(--color-brown) 60%,
+    var(--color-brown) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3s linear infinite;
+}
+
+/* ─── Clip-path text reveal ─── */
+.text-reveal-wrap {
+  overflow: hidden;
+  display: block;
+}
+
+.text-reveal-line {
+  display: block;
+  transform: translateY(110%);
+  will-change: transform;
+}
+
+/* ─── Scroll Indicator ─── */
+@keyframes scroll-bob {
+  0%, 100% { transform: translateY(0); opacity: 0.6; }
+  50% { transform: translateY(6px); opacity: 1; }
+}
+
+.animate-scroll-bob {
+  animation: scroll-bob 2s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+}
+
+/* ─── Underline Draw ─── */
+.underline-draw {
+  position: relative;
+}
+
+.underline-draw::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  height: 1px;
+  width: 100%;
+  background-color: var(--color-gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.underline-draw:hover::after,
+.underline-draw.active::after {
+  transform: scaleX(1);
 }
 
 /* ─── Glass Effects ─── */
 .glass-nav {
-  background-color: rgba(250, 250, 247, 0.8);
-  backdrop-filter: blur(20px) saturate(1.2);
-  -webkit-backdrop-filter: blur(20px) saturate(1.2);
+  background-color: rgba(250, 250, 247, 0.85);
+  backdrop-filter: blur(24px) saturate(1.3);
+  -webkit-backdrop-filter: blur(24px) saturate(1.3);
 }
 
 .glass-card {
@@ -85,9 +190,13 @@
   border: 1px solid var(--color-border);
 }
 
-/* ─── Radial Glow (softer) ─── */
+/* ─── Radial Glow ─── */
 .radial-glow {
-  background: radial-gradient(circle, rgba(237, 232, 220, 0.5) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(184, 134, 11, 0.06) 0%, rgba(237, 232, 220, 0.4) 40%, transparent 70%);
+}
+
+.radial-glow-gold {
+  background: radial-gradient(circle, rgba(184, 134, 11, 0.12) 0%, transparent 65%);
 }
 
 /* ─── SVG Logo Draw ─── */
@@ -101,6 +210,20 @@
   stroke-dashoffset: 1000;
   animation: drawPath 2.5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
 }
+
+/* ─── Floating Dots ─── */
+@keyframes dot-float {
+  0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.3; }
+  33% { transform: translateY(-12px) translateX(5px); opacity: 0.6; }
+  66% { transform: translateY(6px) translateX(-4px); opacity: 0.4; }
+}
+
+.dot-float-1 { animation: dot-float 6s ease-in-out infinite; }
+.dot-float-2 { animation: dot-float 8s ease-in-out infinite 1s; }
+.dot-float-3 { animation: dot-float 7s ease-in-out infinite 2s; }
+.dot-float-4 { animation: dot-float 9s ease-in-out infinite 0.5s; }
+.dot-float-5 { animation: dot-float 5.5s ease-in-out infinite 3s; }
+.dot-float-6 { animation: dot-float 10s ease-in-out infinite 1.5s; }
 
 /* ─── Desktop Custom Cursor ─── */
 @media (min-width: 1024px) {
@@ -132,7 +255,7 @@
   z-index: 9998;
   width: 36px;
   height: 36px;
-  border: 1px solid rgba(26, 18, 7, 0.25);
+  border: 1px solid rgba(26, 18, 7, 0.2);
   border-radius: 50%;
   transform: translate(-50%, -50%);
   transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1),
@@ -144,7 +267,7 @@
 .custom-cursor-ring.hovered {
   width: 52px;
   height: 52px;
-  background-color: rgba(184, 134, 11, 0.08);
+  background-color: rgba(184, 134, 11, 0.06);
   border-color: var(--color-gold);
 }
 
@@ -158,4 +281,35 @@
     var(--color-border) 80%,
     transparent 100%
   );
+}
+
+/* ─── Feature card clip-reveal ─── */
+@keyframes clip-reveal {
+  from { clip-path: inset(0 0 100% 0); }
+  to { clip-path: inset(0 0 0% 0); }
+}
+
+.animate-clip-reveal {
+  animation: clip-reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ─── Pulse ring ─── */
+@keyframes pulse-ring {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+.animate-pulse-ring {
+  animation: pulse-ring 2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+/* ─── Connector line draw ─── */
+.connector-line {
+  stroke-dasharray: 400;
+  stroke-dashoffset: 400;
+  transition: stroke-dashoffset 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.connector-line.drawn {
+  stroke-dashoffset: 0;
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 
 const words = [
   'Jeera Masala',
@@ -15,13 +16,13 @@ const words = [
 
 export default function Marquee() {
   const separator = (
-    <span className="mx-6 text-border text-lg select-none">✦</span>
+    <span className="mx-5 text-gold/60 text-sm select-none">✦</span>
   );
 
   const renderWords = () =>
     words.map((word, i) => (
       <span key={i} className="flex items-center whitespace-nowrap">
-        <span className="font-heading text-[15px] sm:text-lg font-bold text-brown/20 uppercase tracking-[0.15em]">
+        <span className="font-heading text-[13px] sm:text-[15px] font-bold text-cream/30 uppercase tracking-[0.2em]">
           {word}
         </span>
         {separator}
@@ -29,7 +30,14 @@ export default function Marquee() {
     ));
 
   return (
-    <section className="bg-cream py-6 overflow-hidden select-none border-y border-border/40">
+    <motion.section
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6 }}
+      className="bg-brown py-4 overflow-hidden select-none relative"
+    >
+      {/* Marquee tracks */}
       <div className="marquee-container flex">
         <div className="marquee-track flex animate-marquee">
           {renderWords()}
@@ -52,9 +60,9 @@ export default function Marquee() {
           100% { transform: translateX(-100%); }
         }
         .animate-marquee {
-          animation: marquee 30s linear infinite;
+          animation: marquee 24s linear infinite;
         }
       `}</style>
-    </section>
+    </motion.section>
   );
 }

@@ -19,7 +19,7 @@ const lineReveal = {
 };
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
+  hidden: { opacity: 0, y: 20 },
   visible: (i) => ({
     opacity: 1,
     y: 0,
@@ -37,8 +37,11 @@ export default function Hero() {
   const btnRef = useRef(null);
 
   useEffect(() => {
+    // Parallax only on desktop (lg+)
+    const mq = window.matchMedia('(min-width: 1024px)');
+    if (!mq.matches) return;
+
     const ctx = gsap.context(() => {
-      // Bottle subtle parallax on scroll
       if (bottleRef.current) {
         gsap.to(bottleRef.current, {
           y: -40,
@@ -56,8 +59,9 @@ export default function Hero() {
     return () => ctx.revert();
   }, []);
 
-  // Magnetic button effect
+  // Magnetic button — desktop only
   const handleMouseMove = (e) => {
+    if (window.innerWidth < 1024) return;
     const btn = btnRef.current;
     if (!btn) return;
     const rect = btn.getBoundingClientRect();
@@ -82,45 +86,36 @@ export default function Hero() {
   return (
     <section
       ref={containerRef}
-      className="relative min-h-[100svh] bg-cream flex items-center overflow-hidden"
+      className="relative bg-cream overflow-hidden"
     >
+      {/* ─────────────────────────────────────────
+          MOBILE layout  (< lg)
+          Stack: navbar gap → text block → bottle
+      ───────────────────────────────────────── */}
+      <div className="lg:hidden flex flex-col pt-24 pb-10 px-6 min-h-[100svh]">
 
-      <div className="max-w-6xl mx-auto px-6 w-full z-10 pt-28 pb-16 lg:pb-24 grid grid-cols-1 lg:grid-cols-2 gap-0 lg:gap-8 items-center">
-
-        {/* ── Left — Text ── */}
-        <div className="flex flex-col space-y-8">
+        {/* Text block */}
+        <div className="flex flex-col space-y-5 flex-1 justify-center">
 
           {/* Label */}
-          <motion.div
-            custom={0}
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
+          <motion.span
+            custom={0} variants={fadeUp} initial="hidden" animate="visible"
+            className="font-body text-[10px] uppercase tracking-[0.28em] font-medium text-muted"
           >
-            <span className="font-body text-[10px] uppercase tracking-[0.28em] font-medium text-muted">
-              Paris Award Winner&nbsp;&nbsp;·&nbsp;&nbsp;Est. Jalgaon
-            </span>
-          </motion.div>
+            Paris Award Winner · Est. Jalgaon
+          </motion.span>
 
-          {/* Heading — clip-path reveal per line */}
-          <h1 className="font-heading font-bold text-[36px] sm:text-[54px] lg:text-[62px] leading-[1.06] text-brown">
+          {/* Heading */}
+          <h1 className="font-heading font-bold text-[34px] sm:text-[50px] leading-[1.08] text-brown">
             {['Enhance Your', 'Jeera Experience', 'With Pinch'].map((line, i) => (
               <span key={line} className="text-reveal-wrap">
                 <motion.span
                   className="text-reveal-line"
-                  custom={i}
-                  variants={lineReveal}
-                  initial="hidden"
-                  animate="visible"
+                  custom={i} variants={lineReveal} initial="hidden" animate="visible"
                 >
                   {i === 1 ? (
-                    <>
-                      <em className="text-gold font-normal not-italic">Jeera</em>
-                      {' Experience'}
-                    </>
-                  ) : (
-                    line
-                  )}
+                    <><em className="text-gold font-normal not-italic">Jeera</em>{' Experience'}</>
+                  ) : line}
                 </motion.span>
               </span>
             ))}
@@ -128,21 +123,110 @@ export default function Hero() {
 
           {/* Subtext */}
           <motion.p
-            custom={0}
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
-            className="font-body text-[14px] sm:text-[15px] text-muted leading-[1.85] max-w-[380px]"
+            custom={0} variants={fadeUp} initial="hidden" animate="visible"
+            className="font-body text-[13px] text-muted leading-[1.8] max-w-[320px]"
           >
             Carefully crafted Indian-inspired carbonated drinks that elevate every sip with authentic flavour.
           </motion.p>
 
-          {/* CTA buttons */}
+          {/* CTA */}
           <motion.div
-            custom={1}
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
+            custom={1} variants={fadeUp} initial="hidden" animate="visible"
+            className="flex items-center gap-5"
+          >
+            <a
+              href="#products"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-brown text-cream font-body text-[11px] font-semibold tracking-[0.12em] uppercase rounded-full transition-colors duration-300 hover:bg-gold select-none"
+            >
+              <span>Shop Now</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </a>
+            <a href="#discover" className="font-body text-[11px] font-medium text-muted uppercase tracking-[0.12em] transition-colors duration-300">
+              Our Story
+            </a>
+          </motion.div>
+
+          {/* Stats */}
+          <motion.div
+            custom={2} variants={fadeUp} initial="hidden" animate="visible"
+            className="flex items-center gap-6 pt-1"
+          >
+            {[
+              { val: '19K+', lbl: 'Customers' },
+              { val: '13+', lbl: 'Flavours' },
+              { val: '4.9', lbl: 'Rating' },
+            ].map((s, i) => (
+              <React.Fragment key={s.lbl}>
+                {i > 0 && <div className="w-px h-6 bg-border" />}
+                <div className="flex flex-col">
+                  <span className="font-heading font-bold text-[20px] text-brown leading-none">{s.val}</span>
+                  <span className="font-body text-[9px] text-muted uppercase tracking-[0.16em] mt-0.5">{s.lbl}</span>
+                </div>
+              </React.Fragment>
+            ))}
+          </motion.div>
+        </div>
+
+        {/* Bottle — sits below text, centred */}
+        <motion.div
+          ref={bottleRef}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 2.2, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+          className="flex justify-center pt-8 pb-4 select-none"
+        >
+          <img
+            src="/pinchBottle.png"
+            alt="Pinch Jeera Masala Premium Bottle"
+            className="w-[160px] sm:w-[200px] h-auto object-contain animate-float"
+            style={{ filter: 'drop-shadow(0 10px 20px rgba(26, 18, 7, 0.16))' }}
+            loading="eager"
+          />
+        </motion.div>
+      </div>
+
+      {/* ─────────────────────────────────────────
+          DESKTOP layout  (lg+)
+          Two-column side-by-side
+      ───────────────────────────────────────── */}
+      <div className="hidden lg:grid max-w-6xl mx-auto px-6 w-full grid-cols-2 gap-12 items-center min-h-[100svh] pt-24 pb-16">
+
+        {/* Left — Text */}
+        <div className="flex flex-col space-y-8">
+
+          <motion.span
+            custom={0} variants={fadeUp} initial="hidden" animate="visible"
+            className="font-body text-[10px] uppercase tracking-[0.28em] font-medium text-muted"
+          >
+            Paris Award Winner&nbsp;&nbsp;·&nbsp;&nbsp;Est. Jalgaon
+          </motion.span>
+
+          <h1 className="font-heading font-bold text-[56px] xl:text-[64px] leading-[1.06] text-brown">
+            {['Enhance Your', 'Jeera Experience', 'With Pinch'].map((line, i) => (
+              <span key={line} className="text-reveal-wrap">
+                <motion.span
+                  className="text-reveal-line"
+                  custom={i} variants={lineReveal} initial="hidden" animate="visible"
+                >
+                  {i === 1 ? (
+                    <><em className="text-gold font-normal not-italic">Jeera</em>{' Experience'}</>
+                  ) : line}
+                </motion.span>
+              </span>
+            ))}
+          </h1>
+
+          <motion.p
+            custom={0} variants={fadeUp} initial="hidden" animate="visible"
+            className="font-body text-[15px] text-muted leading-[1.85] max-w-[400px]"
+          >
+            Carefully crafted Indian-inspired carbonated drinks that elevate every sip with authentic flavour.
+          </motion.p>
+
+          <motion.div
+            custom={1} variants={fadeUp} initial="hidden" animate="visible"
             className="flex items-center gap-6"
           >
             <a
@@ -158,21 +242,14 @@ export default function Hero() {
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
             </a>
-            <a
-              href="#discover"
-              className="font-body text-[11px] font-medium text-muted hover:text-brown uppercase tracking-[0.12em] transition-colors duration-300"
-            >
+            <a href="#discover" className="font-body text-[11px] font-medium text-muted hover:text-brown uppercase tracking-[0.12em] transition-colors duration-300">
               Our Story
             </a>
           </motion.div>
 
-          {/* Stats mini-row */}
           <motion.div
-            custom={2}
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
-            className="flex flex-wrap items-center gap-x-7 gap-y-3 pt-2"
+            custom={2} variants={fadeUp} initial="hidden" animate="visible"
+            className="flex items-center gap-8 pt-2"
           >
             {[
               { val: '19K+', lbl: 'Customers' },
@@ -180,7 +257,7 @@ export default function Hero() {
               { val: '4.9', lbl: 'Rating' },
             ].map((s, i) => (
               <React.Fragment key={s.lbl}>
-                {i > 0 && <div className="w-px h-7 bg-border hidden sm:block" />}
+                {i > 0 && <div className="w-px h-7 bg-border" />}
                 <div className="flex flex-col">
                   <span className="font-heading font-bold text-[22px] text-brown leading-none">{s.val}</span>
                   <span className="font-body text-[9px] text-muted uppercase tracking-[0.18em] mt-1">{s.lbl}</span>
@@ -190,32 +267,30 @@ export default function Hero() {
           </motion.div>
         </div>
 
-        {/* ── Right — Bottle Visual ── */}
-        <div className="relative flex justify-center items-center h-[280px] sm:h-[380px] lg:h-[580px] select-none">
-
-          {/* Bottle */}
+        {/* Right — Bottle */}
+        <div className="relative flex justify-center items-center h-full select-none">
           <motion.div
             ref={bottleRef}
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 2.1, duration: 1.3, ease: [0.16, 1, 0.3, 1] }}
-            className="relative z-10 w-[180px] sm:w-[220px] lg:w-[260px] h-auto"
+            className="relative z-10 w-[240px] xl:w-[280px] h-auto"
           >
             <img
               src="/pinchBottle.png"
               alt="Pinch Jeera Masala Premium Bottle"
               className="w-full h-auto object-contain animate-float"
-              style={{ filter: 'drop-shadow(0 12px 24px rgba(26, 18, 7, 0.18))' }}
+              style={{ filter: 'drop-shadow(0 14px 28px rgba(26, 18, 7, 0.16))' }}
               loading="eager"
             />
           </motion.div>
 
-          {/* Floating badge — Award Winner (hidden on mobile) */}
+          {/* Award Winner badge */}
           <motion.div
-            initial={{ opacity: 0, x: 20, y: -10 }}
-            animate={{ opacity: 1, x: 0, y: 0 }}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 2.8, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute top-10 right-2 sm:right-10 z-20 hidden sm:block animate-float-delayed"
+            className="absolute top-[20%] right-0 z-20 animate-float-delayed"
           >
             <div className="bg-white/90 backdrop-blur-sm border border-border/60 px-4 py-2.5 rounded-full shadow-sm">
               <span className="font-body text-[9px] font-semibold text-muted uppercase tracking-[0.15em]">
@@ -224,12 +299,12 @@ export default function Hero() {
             </div>
           </motion.div>
 
-          {/* Floating badge — Natural */}
+          {/* Natural badge */}
           <motion.div
-            initial={{ opacity: 0, x: -20, y: 10 }}
-            animate={{ opacity: 1, x: 0, y: 0 }}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 3.0, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute bottom-24 left-4 sm:left-2 z-20 hidden sm:block animate-float"
+            className="absolute bottom-[28%] left-0 z-20 animate-float"
           >
             <div className="bg-brown/90 backdrop-blur-sm px-4 py-2.5 rounded-full shadow-sm">
               <span className="font-body text-[9px] font-semibold text-cream/80 uppercase tracking-[0.15em]">
@@ -240,16 +315,16 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* ── Scroll indicator ── */}
+      {/* Scroll indicator (desktop only) */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 3.2, duration: 0.8 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2"
+        className="hidden lg:flex absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex-col items-center gap-2"
       >
-        <span className="font-body text-[9px] uppercase tracking-[0.25em] text-muted/60">Scroll</span>
+        <span className="font-body text-[9px] uppercase tracking-[0.25em] text-muted/50">Scroll</span>
         <div className="animate-scroll-bob">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-muted/50">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-muted/40">
             <path d="M12 5v14M5 12l7 7 7-7" />
           </svg>
         </div>

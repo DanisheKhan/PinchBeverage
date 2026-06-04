@@ -8,15 +8,15 @@ const galleryImages = [
     src: '/jeera-masala.jpg',
     alt: 'Stamina Litchi premium fruit drink',
     label: 'Stamina Litchi',
-    span: 'col-span-1 row-span-2',
-    aspect: 'h-full',
+    span: 'col-span-1 sm:row-span-2',
+    aspect: 'aspect-[4/5] sm:aspect-auto sm:h-full',
   },
   {
     id: 2,
     src: '/orange.jpg',
     alt: 'Pink Guava premium fruit drink',
     label: 'Pink Guava',
-    span: 'col-span-1 row-span-1',
+    span: 'col-span-1',
     aspect: 'aspect-square',
   },
   {
@@ -24,7 +24,7 @@ const galleryImages = [
     src: '/mojito.jpg',
     alt: 'Pomegranate premium fruit drink',
     label: 'Pomegranate',
-    span: 'col-span-1 row-span-1',
+    span: 'col-span-1',
     aspect: 'aspect-square',
   },
   {
@@ -32,8 +32,8 @@ const galleryImages = [
     src: '/mango.jpg',
     alt: 'Refreshingly Low-Calorie Jeera Masala',
     label: 'Jeera Masala',
-    span: 'col-span-2 row-span-1',
-    aspect: 'aspect-[16/7]',
+    span: 'col-span-1 sm:col-span-2',
+    aspect: 'aspect-[4/3] sm:aspect-[16/7]',
   },
 ];
 
@@ -41,7 +41,7 @@ export default function Gallery() {
   const [activeImage, setActiveImage] = useState(null);
 
   return (
-    <section className="bg-soft py-28">
+    <section className="bg-soft py-16 sm:py-28">
       <div className="max-w-6xl mx-auto px-6">
 
         {/* Header */}
@@ -66,7 +66,7 @@ export default function Gallery() {
           whileInView="visible"
           viewport={{ once: true, margin: '-60px' }}
           variants={stagger}
-          className="grid grid-cols-2 lg:grid-cols-3 gap-3 auto-rows-auto"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 auto-rows-auto"
         >
           {galleryImages.map((img) => (
             <motion.div
@@ -116,7 +116,7 @@ export default function Gallery() {
               <img
                 src={activeImage.src}
                 alt={activeImage.alt}
-                className="w-full h-full object-contain rounded-2xl"
+                className="w-full max-h-[70vh] sm:max-h-[80vh] object-contain rounded-2xl mx-auto"
               />
               <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-brown/50 to-transparent rounded-b-2xl">
                 <span className="font-heading font-bold text-cream text-lg">

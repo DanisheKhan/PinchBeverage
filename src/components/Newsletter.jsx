@@ -16,7 +16,7 @@ export default function Newsletter() {
   };
 
   return (
-    <section id="newsletter" className="bg-brown py-28 relative overflow-hidden">
+    <section id="newsletter" className="bg-brown py-16 sm:py-28 relative overflow-hidden">
       {/* Soft ambient glow */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <div className="absolute left-[5%] bottom-[-20%] w-[500px] h-[500px] bg-gold/5 rounded-full blur-3xl"></div>

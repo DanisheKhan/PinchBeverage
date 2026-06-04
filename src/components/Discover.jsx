@@ -18,9 +18,9 @@ export default function Discover() {
   };
 
   return (
-    <section id="discover" className="bg-cream py-28">
+    <section id="discover" className="bg-cream py-16 sm:py-28">
       <div className="max-w-6xl mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
 
           {/* Left Text */}
           <motion.div

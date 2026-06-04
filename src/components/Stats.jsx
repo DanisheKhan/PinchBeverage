@@ -45,10 +45,10 @@ export default function Stats() {
   }, []);
 
   return (
-    <section ref={rowRef} className="bg-cream py-16 relative z-10">
+    <section ref={rowRef} className="bg-cream py-10 sm:py-16 relative z-10">
       <div className="max-w-6xl mx-auto px-6">
         {/* Divider */}
-        <div className="section-divider mb-16"></div>
+        <div className="section-divider mb-10 sm:mb-16"></div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-0">
           {stats.map((stat, i) => (
@@ -72,7 +72,7 @@ export default function Stats() {
         </div>
 
         {/* Divider */}
-        <div className="section-divider mt-16"></div>
+        <div className="section-divider mt-10 sm:mt-16"></div>
       </div>
     </section>
   );

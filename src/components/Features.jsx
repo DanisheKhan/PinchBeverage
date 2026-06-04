@@ -50,7 +50,7 @@ const featuresData = [
 
 export default function Features() {
   return (
-    <section id="features" className="bg-soft py-28">
+    <section id="features" className="bg-soft py-16 sm:py-28">
       <div className="max-w-6xl mx-auto px-6">
 
         {/* Section Header */}
@@ -69,7 +69,7 @@ export default function Features() {
           </h2>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-20 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
 
           {/* Feature Grid */}
           <motion.div
@@ -109,7 +109,7 @@ export default function Features() {
             whileInView="visible"
             viewport={{ once: true, margin: '-60px' }}
             variants={scaleIn}
-            className="lg:col-span-5 relative flex justify-center items-center h-[380px] select-none"
+            className="lg:col-span-5 relative flex justify-center items-center h-[280px] sm:h-[380px] select-none"
           >
             {/* Soft circle */}
             <div className="absolute w-[260px] h-[260px] bg-accent/50 rounded-full blur-2xl z-0 animate-breathe"></div>

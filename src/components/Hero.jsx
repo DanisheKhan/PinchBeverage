@@ -97,7 +97,7 @@ export default function Hero() {
           </div>
 
           {/* Heading */}
-          <h1 className="font-heading font-bold text-4xl sm:text-5xl lg:text-[52px] leading-[1.08] text-brown">
+          <h1 className="font-heading font-bold text-[32px] sm:text-5xl lg:text-[52px] leading-[1.08] text-brown">
             <span className="hero-title-line block">Enhance Your</span>
             <span className="hero-title-line block">
               <em className="text-gold font-normal not-italic">Jeera</em> Experience
@@ -134,17 +134,17 @@ export default function Hero() {
           </div>
 
           {/* Meta row */}
-          <div className="hero-meta opacity-0 flex items-center space-x-8 pt-4">
+          <div className="hero-meta opacity-0 flex flex-wrap items-center gap-x-6 gap-y-3 pt-4">
             <div className="flex flex-col">
               <span className="font-heading font-bold text-2xl text-brown leading-none">19K+</span>
               <span className="font-body text-[10px] text-muted uppercase tracking-wider mt-1">Customers</span>
             </div>
-            <div className="w-px h-8 bg-border"></div>
+            <div className="w-px h-8 bg-border hidden sm:block"></div>
             <div className="flex flex-col">
               <span className="font-heading font-bold text-2xl text-brown leading-none">13+</span>
               <span className="font-body text-[10px] text-muted uppercase tracking-wider mt-1">Flavours</span>
             </div>
-            <div className="w-px h-8 bg-border"></div>
+            <div className="w-px h-8 bg-border hidden sm:block"></div>
             <div className="flex flex-col">
               <span className="font-heading font-bold text-2xl text-brown leading-none">4.9</span>
               <span className="font-body text-[10px] text-muted uppercase tracking-wider mt-1">Rating</span>
@@ -153,12 +153,12 @@ export default function Hero() {
         </div>
 
         {/* Right — Product */}
-        <div className="relative flex justify-center items-center h-[480px] lg:h-[560px] select-none">
+        <div className="relative flex justify-center items-center h-[320px] sm:h-[420px] lg:h-[560px] select-none">
           {/* Soft circular accent */}
-          <div className="absolute w-[320px] h-[320px] sm:w-[400px] sm:h-[400px] bg-accent/50 rounded-full blur-3xl z-0 animate-breathe"></div>
+          <div className="absolute w-[260px] h-[260px] sm:w-[400px] sm:h-[400px] bg-accent/50 rounded-full blur-3xl z-0 animate-breathe"></div>
 
           {/* Bottle */}
-          <div className="hero-bottle-wrap opacity-0 z-10 w-[220px] sm:w-[260px] h-auto pointer-events-none select-none">
+          <div className="hero-bottle-wrap opacity-0 z-10 w-[160px] sm:w-[220px] lg:w-[260px] h-auto pointer-events-none select-none">
             <img
               src="/pinchBottle.png"
               alt="Pinch Jeera Masala Premium Bottle"

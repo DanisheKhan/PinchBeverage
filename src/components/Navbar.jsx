@@ -14,6 +14,17 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen]);
+
   const navLinks = [
     { label: 'Home', href: '#' },
     { label: 'About', href: '#discover' },
@@ -148,7 +159,7 @@ export default function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="md:hidden fixed inset-0 bg-cream z-40 pt-24 px-8 flex flex-col"
+            className="md:hidden fixed inset-0 bg-cream z-40 pt-24 px-8 flex flex-col overflow-y-auto"
           >
             <div className="flex flex-col space-y-1 flex-grow">
               {['Home', 'Flavours', 'About', 'Contact'].map((item, i) => (

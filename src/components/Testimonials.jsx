@@ -23,7 +23,7 @@ const testimonialsData = [
 
 export default function Testimonials() {
   return (
-    <section id="testimonials" className="bg-cream py-28">
+    <section id="testimonials" className="bg-cream py-16 sm:py-28">
       <div className="max-w-6xl mx-auto px-6">
 
         {/* Header */}

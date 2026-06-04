@@ -43,7 +43,7 @@ export default function FAQ() {
   };
 
   return (
-    <section className="bg-cream py-28">
+    <section className="bg-cream py-16 sm:py-28">
       <div className="max-w-3xl mx-auto px-6">
 
         {/* Header */}
@@ -112,7 +112,7 @@ export default function FAQ() {
                     transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                     className="overflow-hidden"
                   >
-                    <p className="font-body text-[13px] text-muted leading-[1.8] pb-6 pr-12">
+                    <p className="font-body text-[13px] text-muted leading-[1.8] pb-6 pr-4 sm:pr-12">
                       {item.answer}
                     </p>
                   </motion.div>

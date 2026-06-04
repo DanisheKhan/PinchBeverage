@@ -1,9 +1,5 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { motion } from 'framer-motion';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
 
 // Clip-path text reveal variants
 const lineReveal = {
@@ -32,32 +28,7 @@ const fadeUp = {
 };
 
 export default function Hero() {
-  const containerRef = useRef(null);
-  const bottleRef = useRef(null);
   const btnRef = useRef(null);
-
-  useEffect(() => {
-    // Parallax only on desktop (lg+)
-    const mq = window.matchMedia('(min-width: 1024px)');
-    if (!mq.matches) return;
-
-    const ctx = gsap.context(() => {
-      if (bottleRef.current) {
-        gsap.to(bottleRef.current, {
-          y: -40,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: 'top top',
-            end: 'bottom top',
-            scrub: 1.5,
-          },
-        });
-      }
-    }, containerRef);
-
-    return () => ctx.revert();
-  }, []);
 
   // Magnetic button — desktop only
   const handleMouseMove = (e) => {
@@ -85,7 +56,6 @@ export default function Hero() {
 
   return (
     <section
-      ref={containerRef}
       className="relative bg-cream overflow-hidden"
     >
       {/* ─────────────────────────────────────────
@@ -171,7 +141,6 @@ export default function Hero() {
 
         {/* Bottle — sits below text, centred */}
         <motion.div
-          ref={bottleRef}
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 2.2, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
@@ -191,7 +160,7 @@ export default function Hero() {
           DESKTOP layout  (lg+)
           Two-column side-by-side
       ───────────────────────────────────────── */}
-      <div className="hidden lg:grid max-w-6xl mx-auto px-6 w-full grid-cols-2 gap-12 items-center min-h-[100svh] pt-24 pb-16">
+      <div className="hidden lg:grid max-w-6xl mx-auto px-6 w-full grid-cols-2 gap-12 items-center min-h-[100svh] pt-24 pb-20">
 
         {/* Left — Text */}
         <div className="flex flex-col space-y-8">
@@ -268,29 +237,32 @@ export default function Hero() {
         </div>
 
         {/* Right — Bottle */}
-        <div className="relative flex justify-center items-center h-full select-none">
+        <div className="relative flex justify-center items-center select-none" style={{ height: '600px' }}>
           <motion.div
-            ref={bottleRef}
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 2.1, duration: 1.3, ease: [0.16, 1, 0.3, 1] }}
-            className="relative z-10 w-[240px] xl:w-[280px] h-auto"
+            className="relative z-10"
           >
             <img
               src="/pinchBottle.png"
               alt="Pinch Jeera Masala Premium Bottle"
-              className="w-full h-auto object-contain animate-float"
-              style={{ filter: 'drop-shadow(0 14px 28px rgba(26, 18, 7, 0.16))' }}
+              className="w-auto object-contain animate-float"
+              style={{
+                height: '560px',
+                maxHeight: '560px',
+                filter: 'drop-shadow(0 14px 28px rgba(26, 18, 7, 0.16))'
+              }}
               loading="eager"
             />
           </motion.div>
 
-          {/* Award Winner badge */}
+          {/* Award Winner badge — top right of column */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 2.8, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute top-[20%] right-0 z-20 animate-float-delayed"
+            className="absolute top-16 right-4 z-20 animate-float-delayed"
           >
             <div className="bg-white/90 backdrop-blur-sm border border-border/60 px-4 py-2.5 rounded-full shadow-sm">
               <span className="font-body text-[9px] font-semibold text-muted uppercase tracking-[0.15em]">
@@ -299,12 +271,12 @@ export default function Hero() {
             </div>
           </motion.div>
 
-          {/* Natural badge */}
+          {/* Natural badge — left side */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 3.0, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute bottom-[28%] left-0 z-20 animate-float"
+            className="absolute bottom-20 left-4 z-20 animate-float"
           >
             <div className="bg-brown/90 backdrop-blur-sm px-4 py-2.5 rounded-full shadow-sm">
               <span className="font-body text-[9px] font-semibold text-cream/80 uppercase tracking-[0.15em]">
@@ -315,20 +287,8 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Scroll indicator (desktop only) */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 3.2, duration: 0.8 }}
-        className="hidden lg:flex absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex-col items-center gap-2"
-      >
-        <span className="font-body text-[9px] uppercase tracking-[0.25em] text-muted/50">Scroll</span>
-        <div className="animate-scroll-bob">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-muted/40">
-            <path d="M12 5v14M5 12l7 7 7-7" />
-          </svg>
-        </div>
-      </motion.div>
+
+
     </section>
   );
 }
